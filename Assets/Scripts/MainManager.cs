@@ -23,7 +23,8 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ScoreText.text = $"{GameManager.Instance.name} Score : {m_Points}";
+        ScoreTextWithName.text = $"Best Score: {GameManager.Instance.highScoreName} : {GameManager.Instance.highScore}" ;
+        ScoreText.text = $"{GameManager.Instance.userName} Score : {m_Points}";
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -42,6 +43,10 @@ public class MainManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance != null ) {
+            ScoreTextWithName.text = $"Best Score: {GameManager.Instance.highScoreName} : {GameManager.Instance.highScore}" ;
+        }
+        
         if (!m_Started)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -57,6 +62,7 @@ public class MainManager : MonoBehaviour
         }
         else if (m_GameOver)
         {
+            
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -67,14 +73,14 @@ public class MainManager : MonoBehaviour
     void AddPoint(int point)
     {
         m_Points += point;
-        ScoreText.text = $"{GameManager.Instance.name} Score : {m_Points}";
+        ScoreText.text = $"{GameManager.Instance.userName} Score : {m_Points}";
     }
 
     public void GameOver()
     {
         if (GameManager.Instance != null)
         {
-            ScoreTextWithName.text = $"Best Score: {GameManager.Instance.name}: {m_Points}" ;
+            GameManager.Instance.SaveHighScoreUser(m_Points); 
         }
         
         m_GameOver = true;
