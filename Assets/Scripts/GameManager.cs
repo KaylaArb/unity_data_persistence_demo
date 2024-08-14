@@ -28,10 +28,6 @@ public class GameManager : MonoBehaviour
         LoadHighScoreUser();
     }
 
-    public void SetName(string inputName) {
-        userName = inputName;
-    }
-
 
     [System.Serializable]
     public class HighScoreUser {
